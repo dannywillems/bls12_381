@@ -452,6 +452,30 @@ impl Group for Gt {
     }
 }
 
+impl From<Gt> for [u8; 576] {
+    fn from(value: Gt) -> [u8; 576] {
+        let mut res: [u8; 576] = [0; 576];
+        let b = [
+            value.0.c0.c0.c0.to_bytes(),
+            value.0.c0.c0.c1.to_bytes(),
+            value.0.c0.c1.c0.to_bytes(),
+            value.0.c0.c1.c1.to_bytes(),
+            value.0.c0.c2.c0.to_bytes(),
+            value.0.c0.c2.c1.to_bytes(),
+            value.0.c1.c0.c0.to_bytes(),
+            value.0.c1.c0.c1.to_bytes(),
+            value.0.c1.c1.c0.to_bytes(),
+            value.0.c1.c1.c1.to_bytes(),
+            value.0.c1.c2.c0.to_bytes(),
+            value.0.c1.c2.c1.to_bytes(),
+        ];
+        for (i, s) in b.iter().enumerate() {
+            res[i * 48..(i + 1) * 48].copy_from_slice(s)
+        }
+        res
+    }
+}
+
 #[cfg(feature = "alloc")]
 #[cfg_attr(docsrs, doc(cfg(all(feature = "pairings", feature = "alloc"))))]
 #[derive(Clone, Debug)]
