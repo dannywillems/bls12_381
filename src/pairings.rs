@@ -452,6 +452,12 @@ impl Group for Gt {
     }
 }
 
+impl From<Fp12> for Gt {
+    fn from(v: Fp12) -> Gt {
+        Gt(v)
+    }
+}
+
 impl From<Gt> for [u8; 576] {
     fn from(value: Gt) -> [u8; 576] {
         let mut res: [u8; 576] = [0; 576];
